@@ -1,0 +1,14 @@
+From: Jon Ringle <jon@ringle.org>
+Subject: [PATCH] t/fix-export-numbered-greater-than-8
+
+Creating a quilt patch series with more than 8 patches with:
+tg export --quilt --numbered patchdir
+
+Causes the following error to be produced:
+eval: 1: arithmetic expression: expecting EOF: "0008 + 1"
+
+This is due to the leading 0 and the $(()) evaluates as octal rather than decimal.
+
+This patch removes the leading 0's before the $(()) evaluation is done.
+
+Signed-off-by: Jon Ringle <jon@ringle.org>
